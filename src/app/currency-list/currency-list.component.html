@@ -11,6 +11,28 @@
     </option>
   </select>
 
+  Page {{pageNumber}}
+
+<br>
+  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.first)"
+    *ngIf ="currencyPagination?.first"> 
+        first 
+  </a> 
+  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.prev)"
+    *ngIf ="currencyPagination?.prev"> 
+    prev 
+  </a> 
+  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.next)"
+    *ngIf ="currencyPagination?.next"> 
+    next 
+  </a> 
+  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.last)"
+    *ngIf ="currencyPagination?.last"> 
+    last 
+  </a> 
+  
+
+
 
 
  <li *ngFor="let currency of currencyList">

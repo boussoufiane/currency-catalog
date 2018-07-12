@@ -8,12 +8,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CurrencyService {
 
-  pageNumber : number = 2 ; 
+  pageNumber : number = 1 ; 
   pagesize : number = 10 ; 
 
 
   private readonly BASE_URL = "https://api.openfintech.io/v1/currencies"
   private readonly FILTER_URL = "https://api.openfintech.io/v1/currencies"
+  private readonly HOSTNAME = "https://api.openfintech.io"
   uri : string = '?page[number]=' + this.pageNumber + '&page[size]=' + this.pagesize ;
 
   constructor( private  http: HttpClient) {}
@@ -24,14 +25,18 @@ export class CurrencyService {
   }
 
   
-  getCurrencyListByParam(numberCurrenciesPerPage): Observable<any>{
-    let uri = '?page[number]=' + this.pageNumber + '&page[size]=' + numberCurrenciesPerPage ;
+  getCurrencyListByParam(numberCurrenciesPerPage : number , pageNumber : number): Observable<any>{
+    let uri = '?page[number]=' + pageNumber + '&page[size]=' + numberCurrenciesPerPage ;
 
     return this.http.get(this.FILTER_URL + uri);
 }
 
   getCurrencyById(id : string) : Observable<any>{
     return this.http.get(this.BASE_URL + '/' + id);
+  }
+
+  getCurrencyListLink(link : string): Observable<any>{
+    return this.http.get(this.HOSTNAME + link);
   }
   
 
