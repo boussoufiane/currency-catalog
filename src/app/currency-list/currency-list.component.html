@@ -1,42 +1,57 @@
-<div style="text-align:center">
-  <h1>
+<h1>
     Available currencies 
-  </h1>
+</h1>
+
+
+<div>
+<input placeholder="Search"  type="text" id="filterText" style="margin-right:30px;"
+form-control (input)="filter($event)" [value]="filterValue"/>
+
+<select  class="custom-select col-2"   
+(change)="onchangeFilterFieldName($event.target.value)" [value]="filterNameValue">
+   <option *ngFor="let f of keys(filterFieldNameList)" [value]="filterFieldNameList[f]">
+     {{f}}
+   </option>
+ </select>
 </div>
 
-<select     
+<br>
+
+<ul>
+ <li *ngFor="let currency of currencyList">
+        <a routerLink="currency/{{currency.id}}" routerLinkActive="active">
+          ID : {{currency.id}}  Type: {{currency.attributes.currency_type}}   Symbol : {{currency.attributes.symbol}}
+          </a>
+  </li>
+</ul>
+
+<br>
+<select    class="custom-select col-1"  
  (change)="onchangeNumberCurrenciesPerPage($event.target.value)">
     <option *ngFor="let c of numberCurrenciesPerPageList" >
       {{c}}
     </option>
   </select>
 
-  Page {{pageNumber}}
 
-<br>
-  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.first)"
-    *ngIf ="currencyPagination?.first"> 
-        first 
-  </a> 
-  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.prev)"
-    *ngIf ="currencyPagination?.prev"> 
-    prev 
-  </a> 
-  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.next)"
-    *ngIf ="currencyPagination?.next"> 
-    next 
-  </a> 
-  <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.last)"
-    *ngIf ="currencyPagination?.last"> 
-    last 
-  </a> 
-  
+          <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.first)"
+          *ngIf ="currencyPagination?.first" style="margin-right:20px;"> 
+              << 
+        </a> 
+          <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.prev)"
+          *ngIf ="currencyPagination?.prev" style="margin-right:20px;"> 
+          Previous 
+        </a>  
+          <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.next)"
+          *ngIf ="currencyPagination?.next" style="margin-right:20px;"> 
+          Next 
+        </a>  
+        <a routerLink="" routerLinkActive="active" (click)="managePagination(currencyPagination.last)"
+          *ngIf ="currencyPagination?.last" style="margin-right:20px;"> 
+          >> 
+        </a> 
 
 
 
 
- <li *ngFor="let currency of currencyList">
-    <a routerLink="currency/{{currency.id}}" routerLinkActive="active">
-    ID : {{currency.id}}  Type: {{currency.attributes.currency_type}}   Symbol : {{currency.attributes.symbol}}
-    </a>
-</li>
+

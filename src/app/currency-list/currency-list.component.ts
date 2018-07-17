@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Currency } from '../currency';
-import { CurrencyService } from '../currency.service';
-import { CurrencyPagination } from '../currency-pagination';
+import { Currency } from '../model/currency';
+import { CurrencyService } from '../service/currency.service';
+import { FilterFiedEnum } from '../model/filter-field-enum';
+import { CurrencyPagination } from '../model/currency-pagination';
+
 
 
 @Component({
@@ -15,6 +17,12 @@ export class CurrencyListComponent implements OnInit {
   numberCurrenciesPerPage : number = 10 ;
   pageNumber : number = 1 ;
   readonly numberCurrenciesPerPageList :number[] = [10 , 50 , 100] ;
+  filterValue :string ="";
+  filterNameValue :string ="code";
+  filterFieldNameList = FilterFiedEnum ;
+  keys = Object.keys;
+
+   readonly HOSTNAME = "https://api.openfintech.io";
 
   currencyPagination :CurrencyPagination ;
 
@@ -50,20 +58,6 @@ onchangeNumberCurrenciesPerPage(numberCurrenciesPerPage){
     this.getCurrencyListByParam(numberCurrenciesPerPage , this.pageNumber) ;
   }
 
-  getPrevious(){
-    console.log("previous");
-    if(this.pageNumber > 1 ){
-      this.pageNumber -- ; 
-      this.getCurrencyListByParam(this.numberCurrenciesPerPage , this.pageNumber);
-    }
-  }
-
-  getNext(){
-    console.log("next");
-    this.pageNumber ++ ; 
-    this.getCurrencyListByParam(this.numberCurrenciesPerPage , this.pageNumber);
-
-  }
 
   managePagination(link){
     console.log(link);
@@ -73,6 +67,38 @@ onchangeNumberCurrenciesPerPage(numberCurrenciesPerPage){
       console.log(this.currencyList);
       console.log(this.currencyPagination);
     });;
+  }
+
+  filter(event: any){
+    this.filterValue = event.target.value ;
+    console.log("filter");
+     console.log(event.target.value);
+     console.log(this.filterNameValue);
+     console.log(this.pageNumber);
+     console.log(this.filterValue);
+     let link = this.buildLink(this.pageNumber , this.numberCurrenciesPerPage , this.filterNameValue , 
+      this.filterValue) ;
+      console.log(link);
+     this.managePagination(link); 
+  }
+
+
+  buildLink(pageNumber : number  , pageSize :number , filterName :string  , filterValue :string ) : string{
+    console.log("buildLink");
+   let link = "/v1/currencies?page[number]=" + pageNumber+"&page[size]="+ pageSize ;
+   console.log(link);
+   if(filterValue) {
+      link = link + "&filter["+ this.filterNameValue + "]=" + filterValue ;
+   }
+   console.log(link);
+   return link ;
+  
+ 
+  }
+
+  onchangeFilterFieldName(filterNameValue){
+    this.filterValue = "";
+    this.filterNameValue = filterNameValue;
   }
 
 

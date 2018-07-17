@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Currency } from './currency';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -12,9 +11,11 @@ export class CurrencyService {
   pagesize : number = 10 ; 
 
 
-  private readonly BASE_URL = "https://api.openfintech.io/v1/currencies"
-  private readonly FILTER_URL = "https://api.openfintech.io/v1/currencies"
-  private readonly HOSTNAME = "https://api.openfintech.io"
+  private readonly BASE_URL = "https://api.openfintech.io/v1/currencies";
+  private readonly FILTER_URL = "https://api.openfintech.io/v1/currencies";
+  private readonly HOSTNAME = "https://api.openfintech.io";
+
+  
   uri : string = '?page[number]=' + this.pageNumber + '&page[size]=' + this.pagesize ;
 
   constructor( private  http: HttpClient) {}
@@ -36,6 +37,7 @@ export class CurrencyService {
   }
 
   getCurrencyListLink(link : string): Observable<any>{
+    console.log(this.HOSTNAME + link);
     return this.http.get(this.HOSTNAME + link);
   }
   
