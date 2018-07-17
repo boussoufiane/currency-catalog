@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Projet 
+
+This application is developped with angular 6 and bootstrap 4 
+The purpose of this application :
+- Display some information of data fetched from external service using HTTP
+- Display details of every data when clicking 
+- Filtring and search of a full text data 
+- Pagination functionality 
